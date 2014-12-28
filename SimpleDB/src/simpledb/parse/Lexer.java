@@ -1,5 +1,6 @@
 package simpledb.parse;
 
+import java.sql.Connection;
 import java.util.*;
 import java.io.*;
 
@@ -10,13 +11,22 @@ import java.io.*;
 public class Lexer {
    private Collection<String> keywords;
    private StreamTokenizer tok;
-   
+   public int userCnt;
+   public String tempUser;
    /**
     * Creates a new lexical analyzer for SQL statement s.
     * @param s the SQL statement
     */
    public Lexer(String s) {
+	      initKeywords();
+	      tok = new StreamTokenizer(new StringReader(s));
+	      //tok.ordinaryChar('.');
+	      tok.lowerCaseMode(true); //ids and keywords are converted
+	      nextToken();
+	   }
+   public Lexer(String s,int userCount) {
       initKeywords();
+      userCnt=userCount;
       tok = new StreamTokenizer(new StringReader(s));
       tok.ordinaryChar('.');
       tok.lowerCaseMode(true); //ids and keywords are converted
@@ -130,9 +140,16 @@ public class Lexer {
     * @return the string value of the current token
     */
    public String eatId() {
-      if (!matchId())
+       System.out.println("UserCount in eatId " + userCnt);
+	   if(userCnt %2 ==  0)
+	   {
+		   tempUser = "user2.";   
+	   }
+	   else 
+		   tempUser ="user1.";
+       if (!matchId())
          throw new BadSyntaxException();
-      String s = tok.sval;
+      String s =tempUser+tok.sval;
       nextToken();
       return s;
    }

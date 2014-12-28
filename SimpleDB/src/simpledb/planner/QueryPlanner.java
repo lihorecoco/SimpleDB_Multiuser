@@ -18,5 +18,5 @@ public interface QueryPlanner {
     * @param tx the calling transaction
     * @return a plan for that query
     */
-   public Plan createPlan(QueryData data, Transaction tx);
+   public Plan createPlan(QueryData data, Transaction tx,int userCount);
 }

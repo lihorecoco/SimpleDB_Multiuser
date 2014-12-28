@@ -3,8 +3,10 @@ package simpledb.remote;
 import simpledb.tx.Transaction;
 import simpledb.query.Plan;
 import simpledb.server.SimpleDB;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Connection;
 
 /**
  * The RMI server-side implementation of RemoteStatement.
@@ -25,10 +27,10 @@ class RemoteStatementImpl extends UnicastRemoteObject implements RemoteStatement
     * RemoteResultSetImpl constructor for processing.
     * @see simpledb.remote.RemoteStatement#executeQuery(java.lang.String)
     */
-   public RemoteResultSet executeQuery(String qry) throws RemoteException {
+   public RemoteResultSet executeQuery(String qry,int userCount) throws RemoteException {
       try {
          Transaction tx = rconn.getTransaction();
-         Plan pln = SimpleDB.planner().createQueryPlan(qry, tx);
+         Plan pln = SimpleDB.planner().createQueryPlan(qry, tx,userCount);
          return new RemoteResultSetImpl(pln, rconn);
       }
       catch(RuntimeException e) {
@@ -43,10 +45,10 @@ class RemoteStatementImpl extends UnicastRemoteObject implements RemoteStatement
     * which executes it.
     * @see simpledb.remote.RemoteStatement#executeUpdate(java.lang.String)
     */
-   public int executeUpdate(String cmd) throws RemoteException {
+   public int executeUpdate(String cmd,int userCount) throws RemoteException {
       try {
          Transaction tx = rconn.getTransaction();
-         int result = SimpleDB.planner().executeUpdate(cmd, tx);
+         int result = SimpleDB.planner().executeUpdate(cmd, tx , userCount);
          rconn.commit();
          return result;
       }

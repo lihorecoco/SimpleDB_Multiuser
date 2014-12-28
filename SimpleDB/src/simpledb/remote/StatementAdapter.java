@@ -50,7 +50,7 @@ public abstract class StatementAdapter implements Statement {
       throw new SQLException("operation not implemented");
    }
    
-   public ResultSet executeQuery(String sql) throws SQLException {
+   public ResultSet executeQuery(String sql,int userCount) throws SQLException {
       throw new SQLException("operation not implemented");
    }
    

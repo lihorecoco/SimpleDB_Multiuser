@@ -26,7 +26,7 @@ public class StudentMajorNoServer {
 			String qry = "select SName, DName "
 		        + "from DEPT, STUDENT "
 		        + "where MajorId = DId";	
-			Plan p = SimpleDB.planner().createQueryPlan(qry, tx);
+			Plan p = SimpleDB.planner().createQueryPlan(qry, tx,1);
 			
 			// analogous to the result set
 			Scan s = p.open();

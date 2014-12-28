@@ -1,5 +1,7 @@
 package simpledb.planner;
 
+import java.sql.Connection;
+
 import simpledb.tx.Transaction;
 import simpledb.parse.*;
 import simpledb.query.*;
@@ -23,10 +25,10 @@ public class Planner {
     * @param tx the transaction
     * @return the scan corresponding to the query plan
     */
-   public Plan createQueryPlan(String qry, Transaction tx) {
-      Parser parser = new Parser(qry);
+   public Plan createQueryPlan(String qry, Transaction tx,int userCount) {
+      Parser parser = new Parser(qry,userCount);
       QueryData data = parser.query();
-      return qplanner.createPlan(data, tx);
+      return qplanner.createPlan(data, tx, userCount);
    }
    
    /**
@@ -39,8 +41,8 @@ public class Planner {
     * @param tx the transaction
     * @return an integer denoting the number of affected records
     */
-   public int executeUpdate(String cmd, Transaction tx) {
-      Parser parser = new Parser(cmd);
+   public int executeUpdate(String cmd, Transaction tx , int userCount) {
+      Parser parser = new Parser(cmd,userCount);
       Object obj = parser.updateCmd();
       if (obj instanceof InsertData)
          return uplanner.executeInsert((InsertData)obj, tx);

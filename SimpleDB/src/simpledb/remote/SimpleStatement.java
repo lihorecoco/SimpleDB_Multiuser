@@ -15,9 +15,9 @@ public class SimpleStatement extends StatementAdapter {
       rstmt = s;
    }
    
-   public ResultSet executeQuery(String qry) throws SQLException {
+   public ResultSet executeQuery(String qry,int userCount) throws SQLException {
       try {
-         RemoteResultSet rrs = rstmt.executeQuery(qry);
+         RemoteResultSet rrs = rstmt.executeQuery(qry,userCount);
          return new SimpleResultSet(rrs);
       }
       catch(Exception e) {
@@ -25,13 +25,19 @@ public class SimpleStatement extends StatementAdapter {
       }
    }
    
-   public int executeUpdate(String cmd) throws SQLException {
+   public int executeUpdate(String cmd,int userCount) throws SQLException {
       try {
-         return rstmt.executeUpdate(cmd);
+         return rstmt.executeUpdate(cmd,userCount);
       }
       catch(Exception e) {
          throw new SQLException(e);
       }
    }
+
+@Override
+public ResultSet executeQuery(String sql) throws SQLException {
+	// TODO Auto-generated method stub
+	return null;
+}
 }
 

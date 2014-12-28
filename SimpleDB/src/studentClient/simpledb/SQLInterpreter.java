@@ -1,17 +1,20 @@
 package studentClient.simpledb;
 
 import java.sql.*;
+
 import simpledb.remote.SimpleDriver;
+import simpledb.remote.SimpleStatement;
+
 import java.io.*;
 
 public class SQLInterpreter {
     private static Connection conn = null;
-
+    
     public static void main(String[] args) {
 	   try {
-			Driver d = new SimpleDriver();
+			Driver d = (Driver) new SimpleDriver();
 			conn = d.connect("jdbc:simpledb://localhost", null);
-
+			int user=1;
 			Reader rdr = new InputStreamReader(System.in);
 			BufferedReader br = new BufferedReader(rdr);
 
@@ -23,9 +26,9 @@ public class SQLInterpreter {
 				if (cmd.startsWith("exit"))
 					break;
 				else if (cmd.startsWith("select"))
-					doQuery(cmd);
+					doQuery(cmd,user);
 				else
-					doUpdate(cmd);
+					doUpdate(cmd,user);
 		    }
 	    }
 	    catch (Exception e) {
@@ -42,10 +45,11 @@ public class SQLInterpreter {
 		}
 	}
 
-	private static void doQuery(String cmd) {
+	private static void doQuery(String cmd,int userCount) {
 		try {
-		    Statement stmt = conn.createStatement();
-		    ResultSet rs = stmt.executeQuery(cmd);
+		    SimpleStatement stmt = (SimpleStatement) conn.createStatement();
+		    ResultSet rs = stmt.executeQuery(cmd, userCount);
+		    //ResultSet rs = stmt.executeQuery(cmd,userCount);
 		    ResultSetMetaData md = rs.getMetaData();
 		    int numcols = md.getColumnCount();
 		    int totalwidth = 0;
@@ -83,10 +87,10 @@ public class SQLInterpreter {
 		}
 	}
 
-	private static void doUpdate(String cmd) {
+	private static void doUpdate(String cmd,int userCount) {
 		try {
 		    Statement stmt = conn.createStatement();
-		    int howmany = stmt.executeUpdate(cmd);
+		    int howmany = stmt.executeUpdate(cmd,userCount);
 		    System.out.println(howmany + " records processed");
 		}
 		catch (SQLException e) {

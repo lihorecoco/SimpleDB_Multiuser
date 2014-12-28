@@ -17,13 +17,13 @@ public class BasicQueryPlanner implements QueryPlanner {
     * the product of all tables and views; it then selects on the predicate;
     * and finally it projects on the field list. 
     */
-   public Plan createPlan(QueryData data, Transaction tx) {
+   public Plan createPlan(QueryData data, Transaction tx,int userCount) {
       //Step 1: Create a plan for each mentioned table or view
       List<Plan> plans = new ArrayList<Plan>();
       for (String tblname : data.tables()) {
          String viewdef = SimpleDB.mdMgr().getViewDef(tblname, tx);
          if (viewdef != null)
-            plans.add(SimpleDB.planner().createQueryPlan(viewdef, tx));
+        	 plans.add(SimpleDB.planner().createQueryPlan(viewdef, tx,userCount));
          else
             plans.add(new TablePlan(tblname, tx));
       }
