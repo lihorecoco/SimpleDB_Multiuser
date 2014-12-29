@@ -1,8 +1,6 @@
 package simpledb.parse;
 
-import java.sql.Connection;
 import java.util.*;
-
 import simpledb.query.*;
 import simpledb.record.Schema;
 
@@ -14,10 +12,7 @@ public class Parser {
    private Lexer lex;
    
    public Parser(String s) {
-	      lex = new Lexer(s);
-	   }
-   public Parser(String s,int userCount) {
-      lex = new Lexer(s,userCount);
+      lex = new Lexer(s);
    }
    
 // Methods for parsing predicates, terms, expressions, constants, and fields

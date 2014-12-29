@@ -13,7 +13,7 @@ public abstract class StatementAdapter implements Statement {
    public void addBatch(String sql) throws SQLException {
       throw new SQLException("operation not implemented");
    }
-   
+   ///TEST
    public void cancel() throws SQLException {
       throw new SQLException("operation not implemented");
    }
@@ -50,7 +50,7 @@ public abstract class StatementAdapter implements Statement {
       throw new SQLException("operation not implemented");
    }
    
-   public ResultSet executeQuery(String sql,int userCount) throws SQLException {
+   public ResultSet executeQuery(String sql) throws SQLException {
       throw new SQLException("operation not implemented");
    }
    

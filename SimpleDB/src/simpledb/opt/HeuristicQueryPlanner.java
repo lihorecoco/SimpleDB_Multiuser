@@ -5,7 +5,6 @@ import simpledb.query.*;
 import simpledb.opt.TablePlanner;
 import simpledb.parse.QueryData;
 import simpledb.planner.QueryPlanner;
-
 import java.util.*;
 
 /**
@@ -89,10 +88,4 @@ public class HeuristicQueryPlanner implements QueryPlanner {
       tableplanners.remove(besttp);
       return bestplan;
    }
-
-@Override
-public Plan createPlan(QueryData data, Transaction tx, int userCount) {
-	// TODO Auto-generated method stub
-	return null;
-}
 }

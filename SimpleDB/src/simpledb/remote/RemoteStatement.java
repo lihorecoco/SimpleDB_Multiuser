@@ -1,8 +1,6 @@
 package simpledb.remote;
 
 import java.rmi.*;
-import java.sql.Connection;
-
 
 /**
  * The RMI remote interface corresponding to Statement.
@@ -11,7 +9,7 @@ import java.sql.Connection;
  * @author Edward Sciore
  */
 public interface RemoteStatement extends Remote {
-   public RemoteResultSet executeQuery(String qry,int userCount) throws RemoteException;
-   public int            executeUpdate(String cmd,int userCount) throws RemoteException;
+   public RemoteResultSet executeQuery(String qry) throws RemoteException;
+   public int            executeUpdate(String cmd) throws RemoteException;
 }
 
