@@ -2,6 +2,7 @@ package simpledb.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Properties;
 
 /**
  * The RMI server-side implementation of RemoteDriver.
@@ -17,8 +18,8 @@ public class RemoteDriverImpl extends UnicastRemoteObject implements RemoteDrive
     * returns it.
     * @see simpledb.remote.RemoteDriver#connect()
     */
-   public RemoteConnection connect() throws RemoteException {
-      return new RemoteConnectionImpl();
+   public RemoteConnection connect(Properties prop) throws RemoteException {
+      return new RemoteConnectionImpl(prop);
    }
 }
 

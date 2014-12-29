@@ -1,5 +1,7 @@
 package simpledb.planner;
 
+import java.util.Properties;
+
 import simpledb.tx.Transaction;
 import simpledb.parse.*;
 import simpledb.query.*;
@@ -23,10 +25,10 @@ public class Planner {
     * @param tx the transaction
     * @return the scan corresponding to the query plan
     */
-   public Plan createQueryPlan(String qry, Transaction tx) {
+   public Plan createQueryPlan(String qry, Transaction tx,Properties prop) {
       Parser parser = new Parser(qry);
       QueryData data = parser.query();
-      return qplanner.createPlan(data, tx);
+      return qplanner.createPlan(data, tx,prop);
    }
    
    /**
@@ -39,21 +41,21 @@ public class Planner {
     * @param tx the transaction
     * @return an integer denoting the number of affected records
     */
-   public int executeUpdate(String cmd, Transaction tx) {
+   public int executeUpdate(String cmd, Transaction tx,Properties prop) {
       Parser parser = new Parser(cmd);
       Object obj = parser.updateCmd();
       if (obj instanceof InsertData)
-         return uplanner.executeInsert((InsertData)obj, tx);
+         return uplanner.executeInsert((InsertData)obj, tx ,prop);
       else if (obj instanceof DeleteData)
-         return uplanner.executeDelete((DeleteData)obj, tx);
+         return uplanner.executeDelete((DeleteData)obj, tx ,prop);
       else if (obj instanceof ModifyData)
-         return uplanner.executeModify((ModifyData)obj, tx);
+         return uplanner.executeModify((ModifyData)obj, tx ,prop);
       else if (obj instanceof CreateTableData)
-         return uplanner.executeCreateTable((CreateTableData)obj, tx);
+         return uplanner.executeCreateTable((CreateTableData)obj, tx ,prop);
       else if (obj instanceof CreateViewData)
-         return uplanner.executeCreateView((CreateViewData)obj, tx);
+         return uplanner.executeCreateView((CreateViewData)obj, tx ,prop);
       else if (obj instanceof CreateIndexData)
-         return uplanner.executeCreateIndex((CreateIndexData)obj, tx);
+         return uplanner.executeCreateIndex((CreateIndexData)obj, tx ,prop);
       else
          return 0;
    }

@@ -1,14 +1,18 @@
 package studentClient.simpledb;
 
 import java.sql.*;
+import java.util.Properties;
+
 import simpledb.remote.SimpleDriver;
 
 public class CreateStudentDB {
     public static void main(String[] args) {
 		Connection conn = null;
+		Properties prop=new Properties();
 		try {
 			Driver d = new SimpleDriver();
-			conn = d.connect("jdbc:simpledb://localhost", null);
+			prop.setProperty("UserID","180201046");
+			conn = d.connect("jdbc:simpledb://localhost", prop);
 			Statement stmt = conn.createStatement();
 
 			String s = "create table STUDENT(SId int, SName varchar(10), MajorId int, GradYear int)";
@@ -16,8 +20,8 @@ public class CreateStudentDB {
 			System.out.println("Table STUDENT created.");
 
 			s = "insert into STUDENT(SId, SName, MajorId, GradYear) values ";
-			String[] studvals = {"(1, 'joe', 10, 2004)",
-								 "(2, 'amy', 20, 2004)",
+			String[] studvals = {"(12, 'joe', 10, 2004)",
+								 "(23, 'amy', 20, 2004)",
 								 "(3, 'max', 10, 2005)",
 								 "(4, 'sue', 20, 2005)",
 								 "(5, 'bob', 30, 2003)",

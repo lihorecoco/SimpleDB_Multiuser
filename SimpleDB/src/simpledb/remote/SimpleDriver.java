@@ -24,12 +24,17 @@ public class SimpleDriver extends DriverAdapter {
     * properties argument.
     * @see java.sql.Driver#connect(java.lang.String, Properties)
     */
+   Properties prop=new Properties();
    public Connection connect(String url, Properties prop) throws SQLException {
       try {
          String host = url.replace("jdbc:simpledb://", "");  //assumes no port specified
+         
+         this.prop=prop;
+         System.out.println("Connected UserID ----> "+ this.prop.getProperty("UserID"));
+         
          Registry reg = LocateRegistry.getRegistry(host);
          RemoteDriver rdvr = (RemoteDriver) reg.lookup("simpledb");
-         RemoteConnection rconn = rdvr.connect();
+         RemoteConnection rconn = rdvr.connect(this.prop);
          return new SimpleConnection(rconn);
       }
       catch (Exception e) {

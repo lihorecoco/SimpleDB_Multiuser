@@ -1,5 +1,7 @@
 package studentClient.simpledb;
 
+import java.util.Properties;
+
 import simpledb.tx.Transaction;
 import simpledb.query.*;
 import simpledb.server.SimpleDB;
@@ -21,12 +23,13 @@ public class StudentMajorNoServer {
 			
 			// analogous to the connection
 			Transaction tx = new Transaction();
-			
+			Properties prop=new Properties();
+			prop.setProperty("UserID","180201046");
 			// analogous to the statement
 			String qry = "select SName, DName "
 		        + "from DEPT, STUDENT "
 		        + "where MajorId = DId";	
-			Plan p = SimpleDB.planner().createQueryPlan(qry, tx);
+			Plan p = SimpleDB.planner().createQueryPlan(qry, tx,prop);
 			
 			// analogous to the result set
 			Scan s = p.open();

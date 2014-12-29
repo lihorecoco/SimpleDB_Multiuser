@@ -1,6 +1,7 @@
 package simpledb.remote;
 
 import java.rmi.*;
+import java.util.Properties;
 
 /**
  * The RMI remote interface corresponding to Driver.
@@ -10,6 +11,6 @@ import java.rmi.*;
  * @author Edward Sciore
  */
 public interface RemoteDriver extends Remote {
-   public RemoteConnection connect() throws RemoteException;
+   public RemoteConnection connect(Properties prop) throws RemoteException;
 }
 

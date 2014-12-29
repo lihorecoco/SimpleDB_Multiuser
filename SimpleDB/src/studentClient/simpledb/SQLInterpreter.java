@@ -1,7 +1,10 @@
 package studentClient.simpledb;
 
 import java.sql.*;
+import java.util.Properties;
+
 import simpledb.remote.SimpleDriver;
+
 import java.io.*;
 
 public class SQLInterpreter {
@@ -9,9 +12,12 @@ public class SQLInterpreter {
 
     public static void main(String[] args) {
 	   try {
+		    Properties prop=new Properties();
 			Driver d = new SimpleDriver();
-			conn = d.connect("jdbc:simpledb://localhost", null);
-
+			prop.setProperty("UserID","180201046");
+			conn = d.connect("jdbc:simpledb://localhost", prop);
+			
+			
 			Reader rdr = new InputStreamReader(System.in);
 			BufferedReader br = new BufferedReader(rdr);
 

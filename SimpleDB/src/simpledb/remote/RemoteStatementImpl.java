@@ -3,8 +3,10 @@ package simpledb.remote;
 import simpledb.tx.Transaction;
 import simpledb.query.Plan;
 import simpledb.server.SimpleDB;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Properties;
 
 /**
  * The RMI server-side implementation of RemoteStatement.
@@ -13,9 +15,11 @@ import java.rmi.server.UnicastRemoteObject;
 @SuppressWarnings("serial")
 class RemoteStatementImpl extends UnicastRemoteObject implements RemoteStatement {
    private RemoteConnectionImpl rconn;
+   Properties prop=new Properties();
    
-   public RemoteStatementImpl(RemoteConnectionImpl rconn) throws RemoteException {
+   public RemoteStatementImpl(RemoteConnectionImpl rconn,Properties prop) throws RemoteException {
       this.rconn = rconn;
+      this.prop=prop;
    }
    
    /**
@@ -28,7 +32,7 @@ class RemoteStatementImpl extends UnicastRemoteObject implements RemoteStatement
    public RemoteResultSet executeQuery(String qry) throws RemoteException {
       try {
          Transaction tx = rconn.getTransaction();
-         Plan pln = SimpleDB.planner().createQueryPlan(qry, tx);
+         Plan pln = SimpleDB.planner().createQueryPlan(qry, tx,this.prop);
          return new RemoteResultSetImpl(pln, rconn);
       }
       catch(RuntimeException e) {
@@ -46,7 +50,7 @@ class RemoteStatementImpl extends UnicastRemoteObject implements RemoteStatement
    public int executeUpdate(String cmd) throws RemoteException {
       try {
          Transaction tx = rconn.getTransaction();
-         int result = SimpleDB.planner().executeUpdate(cmd, tx);
+         int result = SimpleDB.planner().executeUpdate(cmd, tx,this.prop);
          rconn.commit();
          return result;
       }

@@ -1,8 +1,10 @@
 package simpledb.remote;
 
 import simpledb.tx.Transaction;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Properties;
 
 /**
  * The RMI server-side implementation of RemoteConnection.
@@ -11,14 +13,15 @@ import java.rmi.server.UnicastRemoteObject;
 @SuppressWarnings("serial") 
 class RemoteConnectionImpl extends UnicastRemoteObject implements RemoteConnection {
    private Transaction tx;
-   
+   Properties prop=new Properties();
    /**
     * Creates a remote connection
     * and begins a new transaction for it.
     * @throws RemoteException
     */
-   RemoteConnectionImpl() throws RemoteException {
+   RemoteConnectionImpl(Properties prop) throws RemoteException {
       tx = new Transaction();
+      this.prop=prop;
    }
    
    /**
@@ -26,7 +29,7 @@ class RemoteConnectionImpl extends UnicastRemoteObject implements RemoteConnecti
     * @see simpledb.remote.RemoteConnection#createStatement()
     */
    public RemoteStatement createStatement() throws RemoteException {
-      return new RemoteStatementImpl(this);
+      return new RemoteStatementImpl(this,this.prop);
    }
    
    /**

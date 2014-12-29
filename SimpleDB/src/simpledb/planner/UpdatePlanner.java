@@ -1,5 +1,7 @@
 package simpledb.planner;
 
+import java.util.Properties;
+
 import simpledb.tx.Transaction;
 import simpledb.parse.*;
 
@@ -17,7 +19,7 @@ public interface UpdatePlanner {
     * @param tx the calling transaction
     * @return the number of affected records
     */
-   public int executeInsert(InsertData data, Transaction tx);
+   public int executeInsert(InsertData data, Transaction tx ,Properties prop);
    
    /**
     * Executes the specified delete statement, and
@@ -26,7 +28,7 @@ public interface UpdatePlanner {
     * @param tx the calling transaction
     * @return the number of affected records
     */
-   public int executeDelete(DeleteData data, Transaction tx);
+   public int executeDelete(DeleteData data, Transaction tx,Properties prop);
    
    /**
     * Executes the specified modify statement, and
@@ -35,7 +37,7 @@ public interface UpdatePlanner {
     * @param tx the calling transaction
     * @return the number of affected records
     */
-   public int executeModify(ModifyData data, Transaction tx);
+   public int executeModify(ModifyData data, Transaction tx,Properties prop);
    
    /**
     * Executes the specified create table statement, and
@@ -44,7 +46,7 @@ public interface UpdatePlanner {
     * @param tx the calling transaction
     * @return the number of affected records
     */
-   public int executeCreateTable(CreateTableData data, Transaction tx);
+   public int executeCreateTable(CreateTableData data, Transaction tx,Properties prop);
    
    /**
     * Executes the specified create view statement, and
@@ -53,7 +55,7 @@ public interface UpdatePlanner {
     * @param tx the calling transaction
     * @return the number of affected records
     */
-   public int executeCreateView(CreateViewData data, Transaction tx);
+   public int executeCreateView(CreateViewData data, Transaction tx,Properties prop);
    
    /**
     * Executes the specified create index statement, and
@@ -62,5 +64,5 @@ public interface UpdatePlanner {
     * @param tx the calling transaction
     * @return the number of affected records
     */
-   public int executeCreateIndex(CreateIndexData data, Transaction tx);
+   public int executeCreateIndex(CreateIndexData data, Transaction tx,Properties prop);
 }
